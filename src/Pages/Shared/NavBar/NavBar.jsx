@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../provider/AuthProvider';
 
 const NavBar = () => {
+    const { user, logOut } = useContext(AuthContext)
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.log(error))
+    }
     return (
         <>
             <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl bg-black text-white">
@@ -14,6 +22,8 @@ const NavBar = () => {
                             <li><Link to='/'>Home</Link></li>
                             <li><Link to='/menu'>Our Menu</Link></li>
                             <li><Link to='/order/salad'>Order Food</Link></li>
+                            {user ? <> <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button></> :
+                                <><li><Link to='/login'>Log in</Link></li></>}
                         </ul>
                     </div>
                     <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
@@ -23,6 +33,8 @@ const NavBar = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/menu'>Our Menu</Link></li>
                         <li><Link to='/order/salad'>Order Food</Link></li>
+                        {user ? <> <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button></> :
+                            <><li><Link to='/login'>Log in</Link></li></>}
                     </ul>
                 </div>
                 <div className="navbar-end">
